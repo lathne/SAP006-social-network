@@ -15,14 +15,14 @@ const createPage = () => {
       <h2 class="title">Login</h2>
       <div class="input-field">
         <i class="fas fa-user"></i>
-        <input type="text" id='sign-in-email' placeholder="E-mail" />
+        <input type="text" id='sign-in-email' placeholder="E-mail" autocomplete="off"/>
       </div>
       <p id="sign-in-email-error"></p>
       
       <div class="input-field">
         <i class="fas fa-lock"></i>
         <input type="password" placeholder="Senha" id="password1" 
-        class="password" />
+        class="password" autocomplete="off" />
         <div class="toggle">
           <i id="show1" class="fa fa-eye" aria-hidden="true"></i>
             <i id=" hide1" class="fa fa-eye-slash" aria-hidden="true"></i>
@@ -43,19 +43,19 @@ const createPage = () => {
       <h2 class="title">Criar uma Conta</h2>
       <div class="input-field">
         <i class="fas fa-user"></i>
-        <input type="text" id="sign-up-username" placeholder="Nome" />
+        <input type="text" id="sign-up-username" placeholder="Nome" autocomplete="off"/>
       </div>
       <span class='msg-erro msg-nome'></span>
       <div class="input-field">
         <i class="fas fa-envelope"></i>
-        <input type="email" id="sign-up-email" placeholder="Email"  />
+        <input type="email" id="sign-up-email" placeholder="Email"  autocomplete="off"/>
       </div>
       <span class='msg-erro msg-email'></span>
       <p id="sign-up-email-error"></p>
       <div class="input-field">
         <i class="fas fa-lock"></i>
-        <input type="password" placeholder="Senha" id="password2" class="password"  />
-        <div class="toggle">
+        <input type="password" placeholder="Senha" id="password2" class="password"  autocomplete="off"/>
+        <div class="toggle" >
           <i id="show2" class="fa fa-eye" aria-hidden="true"></i>
           <i id="hide2" class="fa fa-eye-slash" aria-hidden="true"></i>
         </div>

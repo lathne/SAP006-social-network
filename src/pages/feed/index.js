@@ -23,7 +23,6 @@ const createPage = () => {
         
         <main class="feed-container">
         <section id="publish-feed" class="publish-feed">
-            <img src="http://placehold.it/100x100" alt="avatar">
             <input type="text" name="twitterText" id="twitterText" class="twitter-text" placeholder="No que você está pensando?">
             <button id="publishBtn" class="publish-btn">Publicar</button>
         </section>
@@ -91,6 +90,7 @@ const createPage = () => {
 
     section.appendChild(profile());
 
+    
 
   return rootElement;
 };
