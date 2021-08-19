@@ -1,14 +1,11 @@
 import profile from '../../components/profile/profile.js';
 import { changePage } from '../../routes/changePage.js';
 import firebase from '../../services/firebase.js';
+import createPostElement from './post-element.js';
 
 const createPage = () => {
   const rootElement = document.createElement('div');
   const user = firebase.getUser();
- 
-  // if (!user) {
-  //   logout();
-  // }
 
   const contentnewElement = `        
           <header>
@@ -50,23 +47,10 @@ const createPage = () => {
   const links = rootElement.querySelectorAll('.navbar-links li');
   const section = rootElement.querySelector('.feed-logout');
   const navigateProfile = rootElement.querySelector('#goProfile');
+  const postList = rootElement.querySelector('#postsList');
+  const createForm = rootElement.querySelector('#postForm');
 
-  
-
-  //   rootElement.querySelector('#postsList').addEventListener('click', (e) => {
-  //     console.log(e.target.parentNode.parentNode)
-  // })
-
-  // const postsCollection = firebase.firestore().collection("posts");
-  // console.log(postsCollection);
-  
-  rootElement.querySelector('#postForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const textPost = rootElement.querySelector('#postText').value;
-    firebase.createPost(textPost);
-    // rootElement.querySelector('#postsList').innerHTML = '';
-    // firebase.loadPosts()
-  });
+  // registerListener
 
   // NAV LINKS
   navigateProfile.addEventListener('click', () => {
@@ -76,17 +60,56 @@ const createPage = () => {
   // LOGOUT COMPONENT
   section.appendChild(profile());
 
-  //MENU HAMBURGUER
+  // MENU HAMBURGUER
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('open');
     links.forEach((link) => {
       link.classList.toggle('fade');
     });
   });
-  
-  firebase.loadPosts();
+
+  createForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const inputText = createForm.querySelector('#postText');
+    const textPost = inputText.value;
+    await firebase.createPost(textPost);
+  });
+
+  // POSTS
+
+  // // // preenche lista de posts com os posts iniciais
+  // const posts = await firebase.getPosts();
+  // posts.forEach((post) => {
+  //   const postElement = createPostElement(post);
+  //   postList.append(postElement);
+  // });
+
+  firebase.reloadChangePosts((changes) => {
+    changes.forEach((change) => {
+      if (change.type === 'added') {
+        const postElement = createPostElement(change.doc);
+        postList.prepend(postElement);
+      }
+    });
+  });
+
+  //   rootElement.querySelector('#postsList').addEventListener('click', (e) => {
+  //     console.log(e.target.parentNode.parentNode)
+  // })
+
+  // const postsCollection = firebase.firestore().collection("posts");
+  // console.log(postsCollection);
+
+  // rootElement.querySelector('#postForm').addEventListener('submit', (e) => {
+  //   e.preventDefault();
+  //   const textPost = rootElement.querySelector('#postText').value;
+  //   firebase.createPost(textPost);
+  //   // rootElement.querySelector('#postsList').innerHTML = '';
+  //   // firebase.loadPosts()
+  // });
+
+  // firebase.loadPosts();
   return rootElement;
 };
 
 export default createPage;
-

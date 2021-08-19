@@ -19,7 +19,7 @@ export const printPage = async (page) => {
   } else {
     document.title = route.title;
     main.innerHTML = '';
-    const pageElement = route.createPage();
+    const pageElement = await route.createPage();
     main.appendChild(pageElement);
   }
 };
