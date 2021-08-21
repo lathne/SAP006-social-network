@@ -1,6 +1,6 @@
 import profile from '../../components/profile/profile.js';
 import { changePage } from '../../routes/changePage.js';
-// import firebase from ;
+// import firebase from '../../services/firebase.js';
 
 const createInterestsSection = (interests) => {
   console.log(interests);
@@ -19,6 +19,7 @@ const createInterestsSection = (interests) => {
         <img class='img' src="../../img/profile/viagens.png">
         Viagens
       </label>
+
       <input type="checkbox" value="Natureza" id="Natureza" name="Interest">
       <label for="Natureza">
         <img class='img' src="../../img/profile/natureza.png">
@@ -30,31 +31,37 @@ const createInterestsSection = (interests) => {
         <img class='img' src="../../img/profile/filmes.png">
         Filmes e Séries
       </label>
+
       <input type="checkbox" value="Culinária" id="Culinária" name="Interest">
       <label for="Culinária">
         <img class='img' src="../../img/profile/culinaria.png">
         Culinária
       </label>
+
       <input type="checkbox" value="Astrologia" id="Astrologia" name="Interest">
       <label for="Astrologia">
         <img class='img' src="../../img/profile/astrologia.png">
         Astrologia
       </label>
+
       <input type="checkbox" value="Games" id="Games" name="Interest">
       <label for="Games">
         <img class='img' src="../../img/profile/games.png">
         Games
       </label>
+
       <input type="checkbox" value="Fotografia" id="Fotografia" name="Interest">
       <label for="Fotografia">
         <img class='img' src="../../img/profile/fotografia.png">
         Fotografia
       </label>
+
       <input type="checkbox" value="Aprender novas línguas" id="Aprender novas línguas" name="Interest">
       <label for="Aprender novas línguas">
         <img class='img' src="../../img/profile/linguas.png">
         Aprender novas línguas
       </label>
+
       <input type="checkbox" value="Esportes" id="Esportes" name="Interest">
         <img class='img' src="../../img/profile/esportes.png">
         Esportes
@@ -63,16 +70,17 @@ const createInterestsSection = (interests) => {
     <button id="botao-check" type="button" class="btn">Salvar </button>
   `;
 
-  const usuario = firebase.auth().currentUser;
-  const botao = section.querySelector('#botao-check');
-  let interesse = section.querySelectorAll('input[name="Interest"]');
-  let insterestChecked = [];
+  // const user = firebase.getUser;
+  const user = firebase.auth().currentUser;
+  const saveButton = section.querySelector('#botao-check');
+  const interestChoosed = section.querySelectorAll('input[name="Interest"]');
+  const insterestChecked = [];
 
   // Envio de interesses checked ao Firestore
-  botao.addEventListener('click', () => {
-    for (let i = 0; i < interesse.length; i++) {
-      if (interesse[i].checked) {
-        insterestChecked.push(interesse[i].value);
+  saveButton.addEventListener('click', () => {
+    for (let i = 0; i < interestChoosed.length; i++) {
+      if (interestChoosed[i].checked) {
+        insterestChecked.push(interestChoosed[i].value);
       }
     }
 
@@ -80,24 +88,33 @@ const createInterestsSection = (interests) => {
       arr: insterestChecked,
     };
 
+    // const salva = () => {
+    //   const sendCollection = firebase.collectionInterests();
+    //   sendCollection.set(newInterests).then((res) => {
+    //     console.log('add no firebase');
+    //   });
+    // };
     const collectionInterests = firebase
       .firestore()
       .collection('checkbox')
-      .doc(usuario.uid);
+      .doc(user.uid);
     console.log('foooooooi', collectionInterests);
-    collectionInterests.set(newInterests).then(res => {
+    collectionInterests.set(newInterests).then((res) => {
       console.log('add no firebase');
     });
   });
 
+  // salva();
   return section;
 };
+// );
+// };
 
 const createPage = () => {
+  // const user = firebase.getUser();
   const usuario = firebase.auth().currentUser;
   // console.log(usuario);
 
-  const photoURL = firebase.auth().currentUser.photoURL;
   const rootElement = document.createElement('div');
   const contentnewElement = `
   <header>
@@ -122,13 +139,13 @@ const createPage = () => {
     <figure class='profile-area-photo-box'>
       <div class="image-upload">
         <label for="file-input">
-          <img src='${photoURL}' id='user-photo' class='user-photo'/>
+          <img src='${usuario.photoURL || '../../img/profile/user.png'}' id='user-photo' class='user-photo'accept=".jpg, .jpeg, .png, .gif">
         </label>
         <input id="file-input" type="file" />
       </div>
     </figure>
     <div class='name-profile-area'>
-      <p id='name-user'></p>
+      <p id='name-user'>${usuario.displayName}</p>
     </div>
   </section>  
   `;
@@ -142,7 +159,7 @@ const createPage = () => {
   const navigateFeed = rootElement.querySelector('#goFeed');
   const inputImg = rootElement.querySelector('#file-input');
   const userPhoto = rootElement.querySelector('#user-photo');
-  const userName = rootElement.querySelector('#name-user');
+  // const userName = rootElement.querySelector('#name-user');
 
   // NAV LINKS
   navigateFeed.addEventListener('click', () => {
@@ -160,14 +177,6 @@ const createPage = () => {
     });
   });
 
-  // Pega a imagem do usuário ou coloca um avatar
-  firebase.auth().onAuthStateChanged((User) => {
-    if (User != null) {
-      userPhoto.src = User.photoURL || '../../img/profile/user-default.png';
-      userName.innerHTML = User.displayName;
-    }
-  });
-
   // Envio de imagem do perfil ao Storage
   const reader = new FileReader();
   const uid = firebase.database().ref().push().key;
@@ -181,11 +190,11 @@ const createPage = () => {
         ref
           .child(uid)
           .putString(base64, 'base64', { contentType: 'image/png' })
-          .then(snapshot => {
+          .then((snapshot) => {
             ref
               .child(uid)
               .getDownloadURL()
-              .then(url => {
+              .then((url) => {
                 userPhoto.src = url;
                 firebase.auth().currentUser.updateProfile({
                   photoURL: url,
@@ -198,12 +207,24 @@ const createPage = () => {
 
   sendImageToStorage();
 
+  // const templates = () => {
+  //   const sendCollection = firebase.collectionInterests();
+  //   sendCollection.get()
+  //     .then((doc) => {
+  //       const checkInterest = doc.data().arr;
+  //       const interestsSection = createInterestsSection(checkInterest);
+  //       rootElement.appendChild(interestsSection);
+  //     });
+  // };
+
+  // templates();
+
   firebase
     .firestore()
     .collection('checkbox')
     .doc(usuario.uid)
     .get()
-    .then(doc => {
+    .then((doc) => {
       const checkInterest = doc.data().arr;
       const interestsSection = createInterestsSection(checkInterest);
       rootElement.appendChild(interestsSection);

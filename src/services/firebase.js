@@ -2,8 +2,6 @@ const waitAuthState = () => new Promise((resolve) => firebase.auth().onAuthState
 
 const getUser = () => firebase.auth().currentUser;
 
-const logUser = () => firebase.auth().onAuthStateChanged;
-
 const updateUser = async (name) => {
   const user = await getUser();
   user.updateProfile({
@@ -86,10 +84,18 @@ const createPost = (textPost) => {
   return postsCollection.add(post);
 };
 
+// PERFIL
+const collectionInterests = () => {
+  const user = firebase.auth().currentUser;
+  firebase
+    .firestore()
+    .collection('checkbox')
+    .doc(user.uid);
+};
+
 export default {
   waitAuthState,
   getUser,
-  logUser,
   updateUser,
   signInSignUpWithGoogle,
   signIn,
@@ -101,4 +107,5 @@ export default {
   editPost,
   deletePost,
   likePosts,
+  collectionInterests,
 };
