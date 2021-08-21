@@ -20,7 +20,6 @@ const createPage = () => {
                       <div class="hamburger-line"></div>
                       <div class="hamburger-line"></div>
                   </div>
-
                   <ul class="navbar-links" id="navbar-links">
                       <li class="li-items" id="navigate-profile"><a href="#" id="goProfile">Perfil</a></li>
                       <li class="li-items" id="navigate-feed"><a href="#">Feed</a></li>
@@ -30,7 +29,7 @@ const createPage = () => {
           </header>
           <main class="feed-container">
             <section class="greet-user">
-            <img src="${user.photoURL || '../../img/profile/user-default.png'}" alt="User Photo" class="user-feed-photo">
+            <img src="https://i.pravatar.cc/100?img=16" alt="User Photo" class="user-feed-photo">
               <p>Bem vinda, ${user.displayName}</p>
             </section>
         
@@ -38,11 +37,9 @@ const createPage = () => {
                 <input type="text" name="postText" id="postText" class="post-text" autocomplete="off" placeholder="No que você está pensando?" required>
                 <button id="publishBtn" class="post-btn">Publicar</button>
             </form>
-
             <ul id="postsList" class="posts-list"></ul>
           </main>
           
-
     `;
 
   rootElement.innerHTML = contentnewElement;
@@ -52,7 +49,6 @@ const createPage = () => {
   const links = rootElement.querySelectorAll('.navbar-links li');
   const section = rootElement.querySelector('.feed-logout');
   const navigateProfile = rootElement.querySelector('#goProfile');
-  // const userPhoto = rootElement.querySelector('.user-feed-photo');
 
   //   rootElement.querySelector('#postsList').addEventListener('click', (e) => {
   //     console.log(e.target.parentNode.parentNode)
@@ -98,13 +94,6 @@ const createPage = () => {
       link.classList.toggle('fade');
     });
   });
-
-  // firebase.logUser((User) => {
-  //   if (User != null) {
-  //     userPhoto.src = User.photoURL || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpZ3g1bkZprqHHET760R3MqBNUcz8G1OFfva7sIlj-97VNOmqSRG9t9rpF-OMApvISO7c&usqp=CAU';
-  //     //  '../../img/profile/user-default.png';
-  //   }
-  // });
 
   firebase.loadPosts().then(insertPostList);
 

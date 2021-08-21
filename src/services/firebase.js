@@ -74,7 +74,6 @@ const createPost = (textPost) => {
     text: textPost,
     userId: user.uid,
     userName: user.displayName,
-    photoURL: user.photoURL,
     userEmail: user.email,
     likes: [],
     comments: [],
