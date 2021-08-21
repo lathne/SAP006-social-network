@@ -1,9 +1,12 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
 /* eslint-disable func-names */
+import profile from '../../components/profile/profile.js';
+import { changePage } from '../../routes/changePage.js';
+import firebase from '../../services/firebase.js';
 
 const createPage = () => {
-  const photoURL = firebase.auth().currentUser.photoURL;
+  const photoURL = firebase.getUser().photoURL;
   const rootElement = document.createElement('div');
   const contentnewElement = `
   <header>
@@ -17,7 +20,7 @@ const createPage = () => {
 
                   <ul class="navbar-links" id="navbar-links">
                       <li class="li-items" id="navigate-profile"><a href="#">Perfil</a></li>
-                      <li class="li-items" id="navigate-feed"><a href="#">Feed</a></li>
+                      <li class="li-items" id="navigate-feed"><a href="#" id="#goFeed>Feed</a></li>
                       <li class="li-items feed-logout"></li>
                   </ul>
               </nav>
@@ -93,6 +96,16 @@ const createPage = () => {
   const hamburger = rootElement.querySelector('#hamburger');
   const navLinks = rootElement.querySelector('.navbar-links');
   const links = rootElement.querySelectorAll('.navbar-links li');
+  const section = rootElement.querySelector('.feed-logout');
+  const navigateFeed = rootElement.querySelector('#goFeed');
+
+  // NAV LINKS
+  navigateFeed.addEventListener('click', () => {
+    changePage('/');
+  });
+
+  // LOGOUT COMPONENT
+  section.appendChild(profile());
 
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('open');
@@ -112,7 +125,7 @@ const createPage = () => {
   let div = rootElement.querySelector('.resultadoCheckbox');
   // eslint-disable-next-line prefer-const
   let insterestChecked = [];
-  const usuario = firebase.auth().currentUser;
+  const usuario = firebase.getUser();
 
   botao.addEventListener('click', () => {
     for (let i = 0; i < interesse.length; i++) {
@@ -134,7 +147,7 @@ const createPage = () => {
     });
   });
 
-  firebase.auth().onAuthStateChanged((user) => {
+  firebase.logUser()((user) => {
     if (user != null) {
       userPhoto.src = user.photoURL
         || 'https://conteudo.imguol.com.br/blogs/174/files/2018/05/iStock-648229868-1024x909.jpg';

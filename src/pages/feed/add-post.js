@@ -8,7 +8,7 @@ export const addPosts = async (post) => {
       <li id="post-${post.id}" data-template class="post-container">
   
           <div class="user-info-container">
-            <!-- <img src="https://i.pravatar.cc/100?img=48" alt="User Photo" class="user-post-photo"> -->
+            <img src="${post.data().photoURL || 'https://conteudo.imguol.com.br/blogs/174/files/2018/05/iStock-648229868-1024x909.jpg'}" alt="User Photo" class="user-post-photo">
             <p class="user-name">@${post.data().userName}</p>
             <p class="post-date" id="">${post.data().data}</p>
           </div>

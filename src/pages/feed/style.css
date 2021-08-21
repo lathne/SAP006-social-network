@@ -280,13 +280,13 @@
     width: 90%;
 }
 
-/* .user-post-photo {
+.user-post-photo {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 60px;
     border-radius: 50px;
-} */
+}
 
 .user-name {
     font-weight: 600;
