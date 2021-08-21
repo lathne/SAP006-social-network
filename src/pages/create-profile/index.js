@@ -133,7 +133,6 @@ const createPage = () => {
         insterestChecked.push(interesse[i].value);
       }
     }
-    div.innerHTML = insterestChecked.join(', ');
 
     const interests = {
       array: insterestChecked,
@@ -149,8 +148,7 @@ const createPage = () => {
 
   firebase.logUser()((user) => {
     if (user != null) {
-      userPhoto.src = user.photoURL
-        || 'https://conteudo.imguol.com.br/blogs/174/files/2018/05/iStock-648229868-1024x909.jpg';
+      userPhoto.src = user.photoURL || '../../img/profile/user-default.png';
       userName.innerHTML = user.displayName;
     }
   });
