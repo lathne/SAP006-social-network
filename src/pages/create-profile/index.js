@@ -1,6 +1,6 @@
 import profile from '../../components/profile/profile.js';
 import { changePage } from '../../routes/changePage.js';
-// import firebase from '../../services/firebase.js';
+// import firebase from ;
 
 const createInterestsSection = (interests) => {
   console.log(interests);
