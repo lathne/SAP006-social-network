@@ -208,3 +208,20 @@ section {
       margin: auto;
     }
 } 
+
+
+@media screen and (max-width:550px){
+  .profile-area-interests {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .img {
+    margin: 10px;
+    width: 35px;
+    height: 35px;
+    cursor:pointer;
+    margin-bottom: 30px;
+  }
+  }
