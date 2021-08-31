@@ -79,12 +79,6 @@ const register = async () => {
       modal.style.display = 'none';
     }
 
-    // if (deleteButton) {
-    //   const postId = deleteButton;
-    //   await firebase.deletePost(postId);
-    //   document.querySelector(`#post-${postId}`).remove();
-    // }
-
     if (likeButton) {
       const postId = likeButton;
       await firebase.likePosts(postId, currentUserId);
