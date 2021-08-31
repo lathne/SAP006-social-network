@@ -59,7 +59,6 @@ const createPage = () => {
     snap.forEach((post) => {
       addPosts(post);
     });
-    await register();
   };
 
   rootElement.querySelector('#postForm').addEventListener('submit', (e) => {
@@ -89,7 +88,7 @@ const createPage = () => {
     });
   });
 
-  firebase.loadPosts().then(insertPostList);
+  firebase.loadPosts().then((post) => {insertPostList(post); register()});
 
   return rootElement;
 };
